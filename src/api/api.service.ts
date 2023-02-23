@@ -32,8 +32,10 @@ export class ApiService {
                 contains: query.wakun,
               },
 
-              radical: query.radical,
-              remain_strokes: query.remain_strokes,
+              ...(query.radical ? { radical: query.radical } : {}),
+              ...(query.remain_strokes
+                ? { remain_strokes: query.remain_strokes }
+                : {}),
 
               ghtz_id: {
                 startsWith: query.id,
