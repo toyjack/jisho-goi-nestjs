@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  username     String    @unique()
+  email        String
+  password     String
+  last_name    String?
+  first_name   String?
+  last_login   DateTime?
+  date_joined  DateTime
+  is_superuser Boolean
+  is_staff     Boolean
+  is_active    Boolean
+  token        Token?
+}
+
+model Token {
+  key     String   @id
+  created DateTime
+  user_id Int      @unique()
+  user    User     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model About {
+  id         Int       @id @default(autoincrement())
+  creator    String?
+  title      String?
+  lang       String?
+  content    String?
+  pub_date   DateTime?
+  about_type String?
+}
+
+model Gyokuhentaizen {
+  id             Int     @id @default(autoincrement())
+  ghtz_id        String
+  entry          String?
+  jion_r         String?
+  jion_l         String?
+  wakun          String?
+  ids            String?
+  radical        String?
+  remain_strokes String?
+}
+
+model Jiruisho {
+  id                      Int     @id @default(autoincrement())
+  entry                   String
+  variants_A              String?
+  variants_A_no           String?
+  variants_B              String?
+  variants_B_no           String?
+  variants_C              String?
+  variants_C_no           String?
+  shoten                  String?
+  hen                     String
+  bu                      String
+  loc_maeda               String
+  loc_kurokawa            String
+  no_in_block             String
+  total_in_block          String
+  tsuban                  String?
+  bubetsu_tsuban          String?
+  henbetsububesu_onkunban String?
+  on_kun                  String?
+  onkunbetsu_tsuban       String?
+  entry_length            String?
+  on                      String?
+  on_matched              String?
+  on_modern               String?
+  kun                     String?
+  kun_matched             String?
+  kun_modern              String?
+  defination              String?
+  remark                  String?
+  remark2                 String?
+}
+
+model News {
+  id       Int       @id @default(autoincrement())
+  pub_date DateTime?
+  title    String?
+  content  String?
+}
+
+model Rakusyoshu {
+  id                 Int     @id @default(autoincrement())
+  record_creator     String?
+  check_kubo         String?
+  check_fujimoto     String?
+  page               String?
+  line               String?
+  gallica            String?
+  initial_on         String?
+  entry              String?
+  kanji_pair         String?
+  ruby_left_first    String?
+  ruby_left_remains  String?
+  ruby_right_first   String?
+  ruby_right_remains String?
+  remark             String?
+  nikkoku1_entry     String?
+  nikkoku1_url       String?
+  nikkoku2_entry     String?
+  nikkoku2_url       String?
+  nikkoku3_entry     String?
+  nikkoku3_url       String?
+  nikkoku4_entry     String?
+  nikkoku4_url       String?
+  nikkoku5_entry     String?
+  nikkoku5_url       String?
+  nikkoku6_entry     String?
+  nikkoku6_url       String?
+  nikkoku7_entry     String?
+  nikkoku7_url       String?
+  group_entry        String?
+}
+
+model Wakunnosiori {
+  id          Int     @id @default(autoincrement())
+  wks_id      String
+  deffination String?
+  entry       String?
+  location    String?
+}
