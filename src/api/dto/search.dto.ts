@@ -1,9 +1,6 @@
 import { IsOptional, IsString } from 'class-validator';
 
-export class SearchDto {
-  @IsString()
-  database: string;
-
+export class SearchGyokuhenDto {
   @IsString()
   @IsOptional()
   id?: string;

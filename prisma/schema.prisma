@@ -41,7 +41,7 @@ model About {
 
 model Gyokuhentaizen {
   id             Int     @id @default(autoincrement())
-  ghtz_id        String
+  ghtz_id        String  @unique
   entry          String?
   jion_r         String?
   jion_l         String?
@@ -130,4 +130,40 @@ model Wakunnosiori {
   deffination String?
   entry       String?
   location    String?
+}
+
+model BunmeiSetsuyoshu {
+  id             Int     @id @default(autoincrement())
+  //   ID
+  bunmei_id      String  @unique
+  //   語頭記号
+  gotou          String?
+  // 見出し語
+  entry          String?
+  // 見出し語原表記
+  entry_original String?
+  // 語形
+  gokei          String?
+  // 語形原表記
+  gokei_original String?
+  // 声点
+  shouten        String?
+  // 左傍訓
+  left_kun       String?
+  // 注
+  defination     String?
+  // 項目種別
+  item_type      String?
+  // 部
+  bu             String?
+  // 門
+  mon            String?
+  // ページ数
+  page           String?
+  // 行数
+  line           String?
+  // リンク
+  ndl_link       String?
+  // 備考
+  remark         String?
 }
