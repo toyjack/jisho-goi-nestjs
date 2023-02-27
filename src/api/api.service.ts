@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { SearchGyokuhenDto, SearchBunmeiDto, SearchJiruishoDto } from './dto';
+import {
+  SearchGyokuhenDto,
+  SearchBunmeiDto,
+  SearchJiruishoDto,
+  SearchRacvyoxvDto,
+} from './dto';
 
 @Injectable()
 export class ApiService {
@@ -46,6 +51,37 @@ export class ApiService {
     return results;
   }
 
+  async searchRacvyoxv(query: SearchRacvyoxvDto) {
+    const results = await this.prismaService.racvyoxv.findMany({
+      where: {
+        AND: {
+          initial_on: {
+            contains: query.initial_on,
+          },
+          entry: {
+            contains: query.entry,
+          },
+          kanji_pair: {
+            contains: query.kanji_pair,
+          },
+          OR: [
+            { ruby_left_first: { contains: query.ruby } },
+            { ruby_left_remains: { contains: query.ruby } },
+            { ruby_right_first: { contains: query.ruby } },
+            { ruby_right_remains: { contains: query.ruby } },
+          ],
+          remark: {
+            contains: query.remark,
+          },
+          group_entry: {
+            contains: query.group_entry,
+          },
+        },
+      },
+    });
+    return results;
+  }
+
   async searchBunmei(query: SearchBunmeiDto) {
     const results = await this.prismaService.bunmeiSetsuyoshu.findMany({
       where: {
@@ -66,29 +102,28 @@ export class ApiService {
             defination: {
               contains: query.def,
             },
-            // gotou: {
-            //   contains: query.gotou,
-            // },
-            // item_type: {
-            //   contains: query.itemType,
-            // },
-            // bu: {
-            //   contains: query.bu,
-            // },
-            // mon: {
-            //   contains: query.mon,
-            // },
-            // page: {
-            //   contains: query.page,
-            // },
-            // line: {
-            //   contains: query.line,
-            // },
+            gotou: {
+              contains: query.gotou,
+            },
+            item_type: {
+              contains: query.itemType,
+            },
+            bu: {
+              contains: query.bu,
+            },
+            mon: {
+              contains: query.mon,
+            },
+            page: {
+              contains: query.page,
+            },
+            line: {
+              contains: query.line,
+            },
           },
         ],
       },
     });
-    // return query;
     return results;
   }
 
@@ -149,6 +184,14 @@ export class ApiService {
     return this.prismaService.gyokuhentaizen.findUnique({
       where: {
         ghtz_id: id,
+      },
+    });
+  }
+
+  racvyoxvFindOne(id: number) {
+    return this.prismaService.racvyoxv.findUnique({
+      where: {
+        id: id,
       },
     });
   }
