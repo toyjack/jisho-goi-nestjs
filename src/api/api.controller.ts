@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiService } from './api.service';
-import { SearchBunmeiDto, SearchGyokuhenDto } from './dto';
+import { SearchBunmeiDto, SearchGyokuhenDto, SearchJiruishoDto } from './dto';
 
 @Controller('api')
 export class ApiController {
@@ -13,6 +13,16 @@ export class ApiController {
   @Get('/gyokuhentaizen/:id')
   findOne(@Param('id') id: string) {
     return this.apiService.gyokuhenFindOne(id);
+  }
+
+  @Get('/jiruisho/search')
+  searchJiruisho(@Query() query: SearchJiruishoDto) {
+    return this.apiService.searchJiruisho(query);
+  }
+
+  @Get('/jiruisho/:id')
+  findOneJiruisho(@Param('id') id: string) {
+    return this.apiService.jiruishoFindOne(Number(id));
   }
 
   @Get('/bunmei/search')

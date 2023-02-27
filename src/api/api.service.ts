@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { SearchGyokuhenDto, SearchBunmeiDto } from './dto';
+import { SearchGyokuhenDto, SearchBunmeiDto, SearchJiruishoDto } from './dto';
 
 @Injectable()
 export class ApiService {
@@ -92,10 +92,55 @@ export class ApiService {
     return results;
   }
 
-  bunmeiFindOne(id: string) {
+  async searchJiruisho(query: SearchJiruishoDto) {
+    const results = await this.prismaService.jiruisho.findMany({
+      where: {
+        AND: [
+          {
+            entry: {
+              contains: query.entry,
+            },
+            hen: {
+              contains: query.hen,
+            },
+            bu: {
+              contains: query.bu,
+            },
+            onkun: {
+              contains: query.onkun,
+            },
+            char_count: {
+              contains: query.char_count,
+            },
+            gokei_search_original: {
+              contains: query.gokei_search_original,
+            },
+            gokei_search_current: {
+              contains: query.gokei_search_current,
+            },
+            defination: {
+              contains: query.defination,
+            },
+          },
+        ],
+      },
+    });
+    // return query;
+    return results;
+  }
+
+  async bunmeiFindOne(id: string) {
     return this.prismaService.bunmeiSetsuyoshu.findUnique({
       where: {
         bunmei_id: id,
+      },
+    });
+  }
+
+  async jiruishoFindOne(id: number) {
+    return this.prismaService.jiruisho.findUnique({
+      where: {
+        id: id,
       },
     });
   }
