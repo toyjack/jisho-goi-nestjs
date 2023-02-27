@@ -54,29 +54,21 @@ export class ApiService {
   async searchRacvyoxv(query: SearchRacvyoxvDto) {
     const results = await this.prismaService.racvyoxv.findMany({
       where: {
-        AND: {
-          initial_on: {
-            contains: query.initial_on,
+        AND: [
+          {
+            OR: [
+              { kanji_pair: { contains: query.term } },
+              { ruby_left_first: { contains: query.term } },
+              { ruby_left_remains: { contains: query.term } },
+              { ruby_right_first: { contains: query.term } },
+              { ruby_right_remains: { contains: query.term } },
+            ],
           },
-          entry: {
-            contains: query.entry,
+
+          {
+            kanji_pair_length: query.kanji_pair_length,
           },
-          kanji_pair: {
-            contains: query.kanji_pair,
-          },
-          OR: [
-            { ruby_left_first: { contains: query.ruby } },
-            { ruby_left_remains: { contains: query.ruby } },
-            { ruby_right_first: { contains: query.ruby } },
-            { ruby_right_remains: { contains: query.ruby } },
-          ],
-          remark: {
-            contains: query.remark,
-          },
-          group_entry: {
-            contains: query.group_entry,
-          },
-        },
+        ],
       },
     });
     return results;

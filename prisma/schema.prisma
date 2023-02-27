@@ -114,12 +114,13 @@ model Racvyoxv {
   page               String?
   line               String?
   gallica            String?
-  initial_on         String?
-  entry              String?
-  kanji_pair         String?
-  ruby_left_first    String?
+  initial_on         String? // 頭音
+  entry              String? // 代表字
+  kanji_pair         String? // 熟語
+  kanji_pair_length  String?
+  ruby_left_first    String? // 訓（左傍）
   ruby_left_remains  String?
-  ruby_right_first   String?
+  ruby_right_first   String? // 音（右傍）
   ruby_right_remains String?
   remark             String?
   nikkoku1_entry     String?

@@ -3,6 +3,14 @@ import { IsOptional, IsString } from 'class-validator';
 export class SearchRacvyoxvDto {
   @IsString()
   @IsOptional()
+  term?: string;
+
+  @IsString()
+  @IsOptional()
+  kanji_pair_length?: string;
+
+  @IsString()
+  @IsOptional()
   page?: string;
 
   @IsString()
