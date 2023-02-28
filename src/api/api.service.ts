@@ -5,6 +5,7 @@ import {
   SearchBunmeiDto,
   SearchJiruishoDto,
   SearchRacvyoxvDto,
+  SearchWakunnosioriDto,
 } from './dto';
 
 @Injectable()
@@ -119,6 +120,30 @@ export class ApiService {
     return results;
   }
 
+  async searchWakunnosiori(query: SearchWakunnosioriDto) {
+    const results = await this.prismaService.wakunnosiori_Entry.findMany({
+      where: {
+        entry: {
+          contains: query.entry,
+        },
+      },
+      include: {
+        definations: {
+          where: {
+            defination: {
+              contains: query.defination,
+            },
+          },
+          orderBy: {
+            index: 'asc',
+          },
+        },
+      },
+    });
+
+    return results;
+  }
+
   async searchJiruisho(query: SearchJiruishoDto) {
     const results = await this.prismaService.jiruisho.findMany({
       where: {
@@ -184,6 +209,17 @@ export class ApiService {
     return this.prismaService.racvyoxv.findUnique({
       where: {
         id: id,
+      },
+    });
+  }
+
+  wakunnosioriFindOne(id: number) {
+    return this.prismaService.wakunnosiori_Entry.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        definations: true,
       },
     });
   }

@@ -5,6 +5,7 @@ import {
   SearchGyokuhenDto,
   SearchJiruishoDto,
   SearchRacvyoxvDto,
+  SearchWakunnosioriDto,
 } from './dto';
 
 @Controller('api')
@@ -19,6 +20,11 @@ export class ApiController {
   @Get('/racvyoxv/search')
   searchRacvyoxv(@Query() query: SearchRacvyoxvDto) {
     return this.apiService.searchRacvyoxv(query);
+  }
+
+  @Get('/wakunnoshiori/search')
+  searchWakunnoshiori(@Query() query: SearchWakunnosioriDto) {
+    return this.apiService.searchWakunnosiori(query);
   }
 
   @Get('/bunmei/search')
@@ -48,5 +54,10 @@ export class ApiController {
   @Get('/gyokuhentaizen/:id')
   findOne(@Param('id') id: string) {
     return this.apiService.gyokuhenFindOne(id);
+  }
+
+  @Get('/wakunnoshiori/:id')
+  findOneWakunnosiori(@Param('id') id: string) {
+    return this.apiService.wakunnosioriFindOne(Number(id));
   }
 }

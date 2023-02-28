@@ -78,14 +78,6 @@ model News {
   content  String?
 }
 
-model Wakunnosiori {
-  id          Int     @id @default(autoincrement())
-  wks_id      String
-  deffination String?
-  entry       String?
-  location    String?
-}
-
 model BunmeiSetsuyoshu {
   id             Int     @id @default(autoincrement())
   bunmei_id      String  @unique
@@ -114,16 +106,16 @@ model Racvyoxv {
   page               String?
   line               String?
   gallica            String?
-  initial_on         String? // 頭音
-  entry              String? // 代表字
-  kanji_pair         String? // 熟語
-  kanji_pair_length  String?
-  ruby_left_first    String? // 訓（左傍）
+  initial_on         String?
+  entry              String?
+  kanji_pair         String?
+  ruby_left_first    String?
   ruby_left_remains  String?
-  ruby_right_first   String? // 音（右傍）
+  ruby_right_first   String?
   ruby_right_remains String?
   remark             String?
   nikkoku1_entry     String?
+  kanji_pair_length  String?
   nikkoku1_url       String?
   nikkoku2_entry     String?
   nikkoku2_url       String?
@@ -138,4 +130,20 @@ model Racvyoxv {
   nikkoku7_entry     String?
   nikkoku7_url       String?
   group_entry        String?
+}
+
+model Wakunnosiori_Entry {
+  id          Int                @id @default(autoincrement())
+  entry       String?
+  location    String?
+  ndl_url     String?
+  definations Wakunnosiori_Def[]
+}
+
+model Wakunnosiori_Def {
+  id         Int                @id @default(autoincrement())
+  defination String?
+  index      Int?
+  entry      Wakunnosiori_Entry @relation(fields: [entry_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  entry_id   Int
 }
