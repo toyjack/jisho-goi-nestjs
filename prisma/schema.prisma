@@ -79,23 +79,25 @@ model News {
 }
 
 model BunmeiSetsuyoshu {
-  id             Int     @id @default(autoincrement())
-  bunmei_id      String  @unique
-  gotou          String?
-  entry          String?
-  entry_original String?
-  gokei          String?
-  gokei_original String?
-  shouten        String?
-  left_kun       String?
-  defination     String?
-  item_type      String?
-  bu             String?
-  mon            String?
-  page           String?
-  line           String?
-  ndl_link       String?
-  remark         String?
+  id                Int     @id @default(autoincrement())
+  bunmei_id         String  @unique
+  gotou             String?
+  entry             String?
+  entry_original    String?
+  gokei             String?
+  gokei_original    String?
+  shouten_original  String?
+  left_kun_original String?
+  defination        String?
+  item_type         String?
+  bu                String?
+  mon               String?
+  page              String?
+  line              String?
+  ndl_link          String?
+  remark            String?
+  shouten           String?
+  left_kun          String?
 }
 
 model Racvyoxv {
