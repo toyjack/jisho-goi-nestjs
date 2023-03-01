@@ -148,12 +148,3 @@ model Wakunnosiori_Def {
   entry_id   Int
   entry      Wakunnosiori_Entry @relation(fields: [entry_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
-
-model Wakunnosiori_Entry_old_20230228 {
-  id       Int     @id @default(autoincrement())
-  entry    String?
-  location String?
-  ndl_url  String?
-
-  @@map("_Wakunnosiori_Entry_old_20230228")
-}
