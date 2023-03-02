@@ -26,10 +26,16 @@ export class RacyvoxvService {
           },
 
           {
-            nikkoku1_entry: {
-              not: null,
+            id: {
+              lte: 656,
             },
           },
+
+          // {
+          //   nikkoku1_entry: {
+          //     not: null,
+          //   },
+          // },
         ],
       },
     });
