@@ -9,21 +9,25 @@ export class WakunnoshioriService {
   async search(query: SearchWakunnosioriDto) {
     const results = await this.prismaService.wakunnosiori_Entry.findMany({
       where: {
-        entry: {
-          contains: query.entry,
-        },
-      },
-      include: {
-        definations: {
-          where: {
-            defination: {
-              contains: query.defination,
+        AND: [
+          {
+            entry: {
+              contains: query.entry,
             },
           },
-          orderBy: {
-            index: 'asc',
+          {
+            definations: {
+              some: {
+                defination: {
+                  contains: query.defination,
+                },
+              },
+            },
           },
-        },
+        ],
+      },
+      include: {
+        definations: true,
       },
     });
 
