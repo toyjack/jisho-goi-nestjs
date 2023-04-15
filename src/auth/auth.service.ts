@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { Prisma, User } from '@prisma/client';
+import { CreateUserDto } from './dto';
 
 @Injectable({})
 export class AuthService {
@@ -10,16 +12,34 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(
-    username: Prisma.UserWhereUniqueInput,
-    pass: string,
-  ): Promise<any> {
+  async validateUser(username: string, password: string): Promise<any> {
     const user = await this.usersService.findOne(username);
-    if (user && user.password === pass) {
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (user && isMatch) {
       const { password, ...result } = user;
       return result;
     }
     return null;
+  }
+
+  async register(input: CreateUserDto) {
+    const { password, ...others } = input;
+    const hash = await bcrypt.hash(password, 10);
+    const user: Prisma.UserCreateInput = {
+      ...others,
+      password: hash,
+    };
+    try {
+      await this.usersService.createUser(user);
+    } catch (err) {
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: err,
+        },
+        HttpStatus.FORBIDDEN,
+      );
+    }
   }
 
   // async login(user: any) {
