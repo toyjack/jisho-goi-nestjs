@@ -19,8 +19,8 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Request() req) {
-    // return this.authService.login(req.user);
-    return req.user;
+    return this.authService.login(req.user);
+    // return req.user;
   }
 
   // @UseGuards(JwtAuthGuard)
@@ -32,6 +32,12 @@ export class AuthController {
   @Post('register')
   @HttpCode(204)
   async register(@Body() body: CreateUserDto) {
-    return this.authService.register(body);
+    return await this.authService.register(body);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
   }
 }
