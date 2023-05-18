@@ -25,11 +25,11 @@ export class RacyvoxvService {
             kanji_pair_length: query.kanji_pair_length,
           },
 
-          {
-            id: {
-              lte: 656,
-            },
-          },
+          // {
+          //   id: {
+          //     lte: 656,
+          //   },
+          // },
 
           // {
           //   nikkoku1_entry: {
